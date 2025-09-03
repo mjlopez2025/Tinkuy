@@ -45,7 +45,27 @@ include_once("../config.php");
                         <li class="nav-item dropdown nav-color">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Docentes</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" data-value="guarani">Docentes con Asignación Aulica</a></li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle">Docentes con Asignación Aulica</a>
+                                    <ul class="dropdown-menu">
+                                        <!-- Submenú de años (sin funcionalidad) --> 
+                                        <li><a class="dropdown-item year-item active" data-value="2011" data-type="guarani">2011</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2012" data-type="guarani">2012</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2013" data-type="guarani">2013</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2014" data-type="guarani">2014</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2015" data-type="guarani">2015</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2016" data-type="guarani">2016</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2017" data-type="guarani">2017</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2018" data-type="guarani">2018</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2019" data-type="guarani">2019</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2020" data-type="guarani">2020</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2021" data-type="guarani">2021</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2022" data-type="guarani">2022</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2023" data-type="guarani">2023</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2024" data-type="guarani">2024</a></li>
+                                        <li><a class="dropdown-item year-item active" data-value="2025" data-type="guarani">2025</a></li>
+                                    </ul>
+                                </li>
                                 <li><a class="dropdown-item" data-value="mapuche">Designación Docente</a></li>
                                 <!-- Ítem con submenú -->
                                 <li class="dropdown-submenu">
@@ -457,22 +477,29 @@ include_once("../config.php");
             document.querySelectorAll('.year-item').forEach(item => {
                 item.addEventListener('click', function(e) {
                     e.preventDefault();
-                    // 1. Actualizar parámetros
-                    currentQueryType = 'combinados'; // ← FIJO para este submenú
-                    currentYear = this.dataset.value === 'combinados' ? 'all' : this.dataset.value;
-                    currentSelectionText = `Docentes - Unificado ${currentYear === 'all' ? '' : '('+currentYear+')'}`;
-                    currentPage = 1;
+                            const queryType = this.dataset.type || 'combinados'; // Por defecto combinados
+        currentQueryType = queryType;
+        currentYear = this.dataset.value;
+        
+        // Actualizar texto según el tipo
+        if (queryType === 'guarani') {
+            currentSelectionText = `Docentes con Asignación guarani ${currentYear === 'all' ? '' : '('+currentYear+')'}`;
+        } else {
+            currentSelectionText = `Docentes - Unificado ${currentYear === 'all' ? '' : '('+currentYear+')'}`;
+        }
+        
+        currentPage = 1;
+        
+        // Actualizar estilos
+        document.querySelectorAll('.year-item').forEach(yearItem => {
+            yearItem.classList.remove('active');
+        });
+        this.classList.add('active');
 
-                    // 2. Actualizar estilos
-                    document.querySelectorAll('.year-item').forEach(yearItem => {
-                        yearItem.classList.remove('active');
-                    });
-                    this.classList.add('active');
-
-                    // 3. Cargar resultados
-                    cargarResultados();
-                });
-            });
+        // Cargar resultados
+        cargarResultados();
+    });
+});
 
             document.getElementById('excelBtn').addEventListener('click', exportarAExcel);
             document.getElementById('pdfBtn').addEventListener('click', exportarAPDF);
