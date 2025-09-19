@@ -1,11 +1,12 @@
-<?php 
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0"); 
-header("Cache-Control: post-check=0, pre-check=0", false); 
-header("Pragma: no-cache"); 
-include_once("../config.php"); 
+<?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+include_once("../config.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,8 +19,9 @@ include_once("../config.php");
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="styles.css" />
-    
+
 </head>
+
 <body>
     <div class="app-container">
         <header class="app-header">
@@ -38,7 +40,8 @@ include_once("../config.php");
 
         <nav class="navbar navbar-expand-lg custom-navbar">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -47,27 +50,43 @@ include_once("../config.php");
                             <a class="nav-link active" aria-current="page" href="principal.php">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Docentes</a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">Docentes</a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
                                     <a class="dropdown-item dropdown-toggle">Docentes con Asignación Aulica</a>
                                     <ul class="dropdown-menu">
                                         <!-- Submenú de años -->
-                                        <li><a class="dropdown-item year-item" data-value="2011" data-type="guarani">2011</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2012" data-type="guarani">2012</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2013" data-type="guarani">2013</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2014" data-type="guarani">2014</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2015" data-type="guarani">2015</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2016" data-type="guarani">2016</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2017" data-type="guarani">2017</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2018" data-type="guarani">2018</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2019" data-type="guarani">2019</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2020" data-type="guarani">2020</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2021" data-type="guarani">2021</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2022" data-type="guarani">2022</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2023" data-type="guarani">2023</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2024" data-type="guarani">2024</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2025" data-type="guarani">2025</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2011"
+                                                data-type="guarani">2011</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2012"
+                                                data-type="guarani">2012</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2013"
+                                                data-type="guarani">2013</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2014"
+                                                data-type="guarani">2014</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2015"
+                                                data-type="guarani">2015</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2016"
+                                                data-type="guarani">2016</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2017"
+                                                data-type="guarani">2017</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2018"
+                                                data-type="guarani">2018</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2019"
+                                                data-type="guarani">2019</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2020"
+                                                data-type="guarani">2020</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2021"
+                                                data-type="guarani">2021</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2022"
+                                                data-type="guarani">2022</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2023"
+                                                data-type="guarani">2023</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2024"
+                                                data-type="guarani">2024</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2025"
+                                                data-type="guarani">2025</a></li>
                                     </ul>
                                 </li>
                                 <li><a class="dropdown-item" data-value="mapuche">Designación Docente</a></li>
@@ -75,44 +94,62 @@ include_once("../config.php");
                                     <a class="dropdown-item dropdown-toggle">Docentes - Unificado</a>
                                     <ul class="dropdown-menu">
                                         <!-- Submenú de años -->
-                                        <li><a class="dropdown-item year-item" data-value="2011" data-type="combinados">2011</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2012" data-type="combinados">2012</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2013" data-type="combinados">2013</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2014" data-type="combinados">2014</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2015" data-type="combinados">2015</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2016" data-type="combinados">2016</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2017" data-type="combinados">2017</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2018" data-type="combinados">2018</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2019" data-type="combinados">2019</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2020" data-type="combinados">2020</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2021" data-type="combinados">2021</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2022" data-type="combinados">2022</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2023" data-type="combinados">2023</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2024" data-type="combinados">2024</a></li>
-                                        <li><a class="dropdown-item year-item" data-value="2025" data-type="combinados">2025</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2011"
+                                                data-type="combinados">2011</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2012"
+                                                data-type="combinados">2012</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2013"
+                                                data-type="combinados">2013</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2014"
+                                                data-type="combinados">2014</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2015"
+                                                data-type="combinados">2015</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2016"
+                                                data-type="combinados">2016</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2017"
+                                                data-type="combinados">2017</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2018"
+                                                data-type="combinados">2018</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2019"
+                                                data-type="combinados">2019</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2020"
+                                                data-type="combinados">2020</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2021"
+                                                data-type="combinados">2021</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2022"
+                                                data-type="combinados">2022</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2023"
+                                                data-type="combinados">2023</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2024"
+                                                data-type="combinados">2024</a></li>
+                                        <li><a class="dropdown-item year-item" data-value="2025"
+                                                data-type="combinados">2025</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        <!-- Elemento Jurumí -->
+                        <!-- Elemento del menú de Jurumí -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Jurumí</a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">Jurumí</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item jurumi-item" data-value="jurumi" data-type="stock">Detalle de Stock</a></li>
-                                <li><a class="dropdown-item jurumi-item" data-value="jurumi" data-type="entrega">Detalle de Entrega</a></li>
+                                <li><a class="dropdown-item jurumi-item" data-value="jurumi" data-type="stock">Detalle
+                                        de Stock</a></li>
+                                <li><a class="dropdown-item jurumi-item" data-value="entrega"
+                                        data-type="entrega">Detalle de Entrega</a></li>
                             </ul>
                         </li>
                     </ul>
                     <!-- Contenedor del filtro -->
                     <div class="filter-container">
                         <label for="filterInput" class="filter-label">Filtrar:</label>
-                        <input type="text" id="filterInput" class="form-control filter-input" placeholder="Nombre/Apellido" />
+                        <input type="text" id="filterInput" class="form-control filter-input"
+                            placeholder="Nombre/Apellido" />
                         <button type="button" id="filterBtn" class="btn btn-outline-primary">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
                     <p type="button" id="refreshBtn">
-                        <i class="fas fa-sync-alt"></i>
                     </p>
                 </div>
             </div>
@@ -178,12 +215,12 @@ include_once("../config.php");
 
             try {
                 let url = `${baseURL}?action=getData&type=${currentQueryType}&page=${currentPage}&search=${encodeURIComponent(currentSearchTerm)}`;
-                
+
                 // Solo agregar el parámetro year si no es una consulta Jurumí
                 if (currentQueryType !== 'jurumi') {
                     url += `&year=${currentYear}`;
                 }
-                
+
                 const response = await fetch(url);
 
                 if (!response.ok) throw new Error('Error en la respuesta del servidor');
@@ -298,12 +335,12 @@ include_once("../config.php");
         async function obtenerTodosLosDatos() {
             try {
                 let url = `${baseURL}?action=getData&type=${currentQueryType}&search=${encodeURIComponent(currentSearchTerm)}&perPage=100000`;
-                
+
                 // Solo agregar el parámetro year si no es una consulta Jurumí
                 if (currentQueryType !== 'jurumi') {
                     url += `&year=${currentYear}`;
                 }
-                
+
                 const response = await fetch(url);
                 const data = await response.json();
                 return data.data || [];
@@ -356,12 +393,12 @@ include_once("../config.php");
             doc.setFontSize(16);
             doc.setTextColor(255, 255, 255);
             doc.setFont("helvetica", "bold");
-            
+
             // Título diferente para Jurumí
-            const titulo = currentQueryType === 'jurumi' ? 
-                "DETALLE DE STOCK JURUMÍ" : 
+            const titulo = currentQueryType === 'jurumi' ?
+                "DETALLE DE STOCK JURUMÍ" :
                 "LISTADO COMPLETO DE DOCENTES";
-                
+
             doc.text(titulo, pageWidth / 2, 12, { align: "center" });
             doc.setFontSize(10);
             doc.text(`Exportado el: ${new Date().toLocaleString('es-AR')}`, pageWidth / 2, 18, { align: "center" });
@@ -431,13 +468,13 @@ include_once("../config.php");
                     2: { cellWidth: 'auto', halign: 'center' },
                     3: { cellWidth: 'auto', halign: 'center' }
                 },
-                didDrawPage: function(data) {
+                didDrawPage: function (data) {
                     // Pie de página
                     doc.setFontSize(8);
                     doc.setTextColor(100, 100, 100);
                     doc.setFont("helvetica", "italic");
                     doc.text(`Página ${doc.internal.getNumberOfPages()}`, pageWidth / 2, pageHeight - 5, { align: "center" });
-                    
+
                     // Línea decorativa
                     doc.setDrawColor(200, 200, 200);
                     doc.line(margin, pageHeight - 10, pageWidth - margin, pageHeight - 10);
@@ -451,7 +488,7 @@ include_once("../config.php");
             } else {
                 fileName = `docentes_${currentQueryType}_${currentYear || 'todos'}_${new Date().toISOString().split('T')[0]}.pdf`;
             }
-            
+
             doc.save(fileName);
         }
 
@@ -472,7 +509,7 @@ include_once("../config.php");
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('logoutBtn').addEventListener('click', secureLogout);
 
             document.getElementById('refreshBtn').addEventListener('click', () => {
@@ -480,13 +517,13 @@ include_once("../config.php");
                 cargarResultados();
             });
 
-            document.getElementById('filterBtn').addEventListener('click', function() {
+            document.getElementById('filterBtn').addEventListener('click', function () {
                 currentSearchTerm = document.getElementById('filterInput').value.trim();
                 currentPage = 1;
                 cargarResultados();
             });
 
-            document.getElementById('filterInput').addEventListener('keyup', function(e) {
+            document.getElementById('filterInput').addEventListener('keyup', function (e) {
                 if (e.key === 'Enter') {
                     currentSearchTerm = this.value.trim();
                     currentPage = 1;
@@ -496,7 +533,7 @@ include_once("../config.php");
 
             // Manejo del menú principal
             document.querySelectorAll('.dropdown-item:not(.year-item):not(.jurumi-item)').forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     e.preventDefault();
                     currentQueryType = this.dataset.value;
                     currentSelectionText = this.textContent;
@@ -510,21 +547,21 @@ include_once("../config.php");
 
             // Manejo del submenú de años
             document.querySelectorAll('.year-item').forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     e.preventDefault();
                     const queryType = this.dataset.type || 'combinados';
                     currentQueryType = queryType;
                     currentYear = this.dataset.value;
-                    
+
                     // Actualizar texto según el tipo
                     if (queryType === 'guarani') {
-                        currentSelectionText = `Docentes con Asignación guarani ${currentYear === 'all' ? '' : '('+currentYear+')'}`;
+                        currentSelectionText = `Docentes con Asignación guarani ${currentYear === 'all' ? '' : '(' + currentYear + ')'}`;
                     } else {
-                        currentSelectionText = `Docentes - Unificado ${currentYear === 'all' ? '' : '('+currentYear+')'}`;
+                        currentSelectionText = `Docentes - Unificado ${currentYear === 'all' ? '' : '(' + currentYear + ')'}`;
                     }
-                    
+
                     currentPage = 1;
-                    
+
                     // Actualizar estilos
                     document.querySelectorAll('.year-item').forEach(yearItem => {
                         yearItem.classList.remove('active');
@@ -536,19 +573,28 @@ include_once("../config.php");
                 });
             });
 
-            // Manejo del menú Jurumí
+            // En el event listener del menú Jurumi
             document.querySelectorAll('.jurumi-item').forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     e.preventDefault();
-                    currentQueryType = 'jurumi';
-                    currentJurumiType = this.dataset.type;
+
+                    // ✅ ESTO DEBE SER data-value (no data-type)
+                    currentQueryType = this.dataset.value;  // "jurumi" o "entrega"
+                    currentJurumiType = this.dataset.type;  // "stock" o "entrega" (solo para el placeholder)
                     currentSelectionText = this.textContent;
+
                     currentPage = 1;
                     currentSearchTerm = '';
                     currentYear = 'all';
                     document.getElementById('filterInput').value = '';
-                    document.getElementById('filterInput').placeholder = "Código/Descripción";
-                    
+
+                    // ✅ Placeholder dinámico
+                    if (currentJurumiType === 'stock') {
+                        document.getElementById('filterInput').placeholder = "Código/Descripción/Almacén";
+                    } else if (currentJurumiType === 'entrega') {
+                        document.getElementById('filterInput').placeholder = "Estado/Unidad/Observación/Solicitante";
+                    }
+
                     // Actualizar estilos
                     document.querySelectorAll('.jurumi-item').forEach(jurumiItem => {
                         jurumiItem.classList.remove('active');
@@ -565,4 +611,5 @@ include_once("../config.php");
         });
     </script>
 </body>
+
 </html>

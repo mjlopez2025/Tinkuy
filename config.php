@@ -25,7 +25,7 @@ $dsn = "pgsql:host={$config_tinkuy['host']};port={$config_tinkuy['port']};dbname
 $config_mapuche = [
     'host'     => 'localhost',
     'port'     => '5432',
-    'dbname'   => 'siu',
+    'dbname'   => 'mapuche',
     'user'     => 'postgres',
     'password' => '13082019'
 ]; 
@@ -83,5 +83,5 @@ $conn_jurumi = new PDO(
     //Produccion: http://172.16.1.58/Tinkuy/consultas/consultas.php
     // Desarrollo: http://localhost:8000/Tinkuy/consultas/consultas.php
 
-define('BASE_URL', 'http://localhost:8000/consultas/consultas.php');
+define('BASE_URL', 'http://localhost/Tinkuy/consultas/consultas.php');
 

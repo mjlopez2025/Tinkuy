@@ -812,3 +812,86 @@ th {
             position: relative;
             z-index: 2; /* Aseguramos que estos elementos estén por encima del logo */
         }
+        
+
+        /* ==================== */
+/* CURSOR POINTER PARA TODO EL MENÚ */
+/* ==================== */
+
+/* ✅ 1. Items principales del navbar (Home, Docentes, Jurumí) */
+.navbar-nav .nav-link {
+    cursor: pointer !important;
+}
+
+/* ✅ 2. Dropdown toggles (los que tienen flechita) */
+.navbar-nav .dropdown-toggle {
+    cursor: pointer !important;
+}
+
+/* ✅ 3. Todos los items normales de dropdown */
+.dropdown-menu .dropdown-item {
+    cursor: pointer !important;
+}
+
+/* ✅ 4. Items específicos de años */
+.dropdown-menu .year-item {
+    cursor: pointer !important;
+}
+
+/* ✅ 5. Items específicos de Jurumí */
+.dropdown-menu .jurumi-item {
+    cursor: pointer !important;
+}
+
+/* ✅ 6. Items de submenú (los que tienen otro dropdown) */
+.dropdown-submenu .dropdown-toggle {
+    cursor: pointer !important;
+}
+
+/* ✅ 7. Items dentro de submenús anidados */
+.dropdown-submenu .dropdown-menu .dropdown-item {
+    cursor: pointer !important;
+}
+
+/* ✅ 8. Botón de refresh */
+#refreshBtn {
+    cursor: pointer !important;
+}
+
+/* ✅ 9. Botón de filtro */
+#filterBtn {
+    cursor: pointer !important;
+}
+
+/* ==================== */
+/* EXTRAS: Hover effects bonitos */
+/* ==================== */
+
+/* ✅ Hover para items principales */
+.navbar-nav .nav-link:hover {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    border-radius: 5px;
+}
+
+/* ✅ Hover para items de dropdown */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .year-item:hover,
+.dropdown-menu .jurumi-item:hover {
+    background-color: #2c3e50 !important;
+    color: white !important;
+}
+
+/* ✅ Hover para botones */
+#refreshBtn:hover,
+#filterBtn:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* ✅ Hover para dropdown toggles */
+.navbar-nav .dropdown-toggle:hover {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    border-radius: 5px 5px 0 0;
+}
