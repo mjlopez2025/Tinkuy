@@ -1,0 +1,982 @@
+body .html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
+    border-color: transparent !important;
+}
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    border: none;
+    height: 100vh; /* Ocupa toda la altura visible */
+    overflow: hidden; /* Evita que el contenedor principal tenga scroll */
+}
+.app-header {
+    background-color: #2c3e50;
+    padding: 1rem;
+    text-align: center;
+    height: 130px;
+}
+.app-main {
+    flex: 1;
+    padding: 1rem;
+    width: 98%;
+    border-bottom: 0px;
+    overflow: hidden; /* Elimina cualquier scroll del área principal */
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px); /* Ajusta según la altura de tu header y footer */
+}
+.app-footer {
+  background-color: #2c3e50;
+    color: white;
+    padding: 0.1rem;
+    text-align: center;
+}
+footer, .app-footer {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.app-footer p {
+  margin: 0.1rem; /* 1rem arriba/abajo, 0 en los lados (ajusta el valor según necesites) */
+  padding-bottom: 0.1rem; /* Espacio extra inferior solo para el texto */
+}
+
+.query-panel {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.results-container {
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 0px;
+    margin-bottom: -10px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 14px;
+}
+th, td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+tr:hover {
+    background-color: #f5f5f5;
+}
+.highlight-difference {
+    background-color: #fff3cd;
+}
+.error-message {
+    color: #dc3545;
+    padding: 1rem;
+    background-color: #f8d7da;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+}
+.query-select {
+    width: 100%;
+    padding: 8px 30px 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    appearance: none;
+    background-color: white;
+    font-size: 0.9em;
+}
+.select-wrapper i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+.refresh-btn {
+    padding: 8px 15px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 0.9em;
+}
+.db-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.connected {
+    background-color: #d4edda;
+    color: #155724;
+}
+.disconnected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.table-container {
+    max-height: 600px;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.pagination a {
+    padding: 6px 12px;
+    margin: 2px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #2c3e50;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.pagination a.active {
+    background-color: #2c3e50;
+    color: white;
+    border: 1px solid #2c3e50;
+}
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+}
+.no-results i {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #6c757d;
+}
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+.results-meta {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+ .results-section {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .loading-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+ .export-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 10px; /* Empuja los botones a la derecha */
+}
+    /* Nuevas reglas para eliminar la línea gris */
+    .app-container, .app-main, .query-panel {
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+    }
+    body {
+        background-color: #fff; /* Fondo blanco sólido */
+    }
+
+        
+.table-container {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f5f5f5;
+    position: sticky;
+    top: 0;
+}
+
+.loading {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+}
+
+.error {
+    padding: 15px;
+    background: #ffebee;
+    color: #d32f2f;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+
+
+    
+    /* Mensajes de error y vacíos */
+    .error-message {
+        padding: 20px;
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+        margin: 15px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .no-results {
+        padding: 40px 20px;
+        text-align: center;
+    }
+    
+    .no-results-content {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .no-results i {
+        font-size: 2.5rem;
+        color: #6c757d;
+        margin-bottom: 15px;
+    }
+    
+    .no-results h3 {
+        color: #343a40;
+        margin-bottom: 5px;
+    }
+    
+    .no-results p {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .professional-table {
+            font-size: 0.85rem;
+        }
+        
+        .professional-table th, 
+        .professional-table td {
+            padding: 10px 8px;
+        }
+        
+        .results-meta {
+            gap: 10px;
+        }
+        
+        .pagination-button {
+            padding: 6px 8px;
+            font-size: 0.8rem;
+        }
+        
+        .pagination-number {
+            min-width: 30px;
+            padding: 6px 8px;
+        }
+    }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribuye los elementos */
+    margin-bottom: -3rem !important;
+    margin-top: -20px;
+    padding: 0 15px;
+    gap: 10px; /* Espacio entre elementos */
+    flex-wrap: wrap; /* Para responsive */
+}
+
+.btn-volver {
+    background-color: #007BFF; /* Azul Bootstrap */
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-volver:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #2196F3;
+}
+
+.error-alert {
+    background: #FFF3E0;
+    border-left: 4px solid #FFA000;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.error-alert i.fas {
+    color: #FFA000;
+    margin-right: 10px;
+}
+
+.retry-btn {
+    background: #FFA000;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.retry-btn:hover {
+    background: #FF8F00;
+}
+
+.pagination-container {
+    margin-top: 27px;
+    margin-bottom: 0 !important; /* <- Fuerza cero margen inferior */
+    padding-bottom: 0 !important; /* <- También fuerza cero padding */
+    text-align: center;
+}
+
+.pagination-container button,
+.pagination-container span {
+    margin: 3px;
+    padding: 5px 10px;
+    border: none;
+    background: #f0f0f0;
+    color: #333;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination-container button:hover:not([disabled]) {
+    background: #ddd;
+}
+
+.pagination-container button[disabled] {
+    background: #bbb;
+    cursor: default;
+    color: white;
+}
+
+.pagination-container span {
+    padding: 5px 8px;
+    color: #888;
+    font-weight: normal;
+}
+
+.logo-container {
+    margin-right: calc(50% - 150px);
+    width: 300px;
+    margin-top: 20px;
+    flex: auto;
+}
+.logo {
+    margin-left: 0;
+    width: 300px;
+    margin-top: -12px;
+}
+.undav {
+    width: 80px;
+    left: 10px;
+    margin-top: 10px;
+}
+
+.logo_undav {
+    width: 100px; /* Ancho exacto */
+    height: auto; /* Alto proporcional */
+    vertical-align: middle; /* Alinea verticalmente con el texto */
+}
+
+.filter-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .filter-label {
+            margin-bottom: 0;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        .filter-input {
+            width: 200px;
+            height: 30px;
+        }
+
+/* Estilos para los botones de exportación */
+.export-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.query-panel {
+    position: relative; /* Para que los botones se posicionen relativos a este contenedor */
+    margin-top: 0.5rem !important;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 70px;
+}
+
+/* Estilos para la tabla */
+.results-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.results-container th, 
+.results-container td {
+    padding: 8px 12px;
+    border: 1px solid #dee2e6;
+}
+
+.results-container th {
+    background-color: #f8f9fa;
+    text-align: left;
+}
+
+.export-buttons .btn {
+    padding: 4px 20px;
+    font-size: 1.1rem;
+    min-width: 150px; /* Ancho mínimo consistente */
+    border-radius: 10px;
+}
+
+.custom-navbar {
+    background-color: #2c3e50;
+    margin-top: 1px;
+    height: 40px;
+    color: white;
+}
+
+.custom-navbar .nav-link,
+.custom-navbar .navbar-brand,
+.custom-navbar .dropdown-toggle {
+    color: white !important;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .dropdown-toggle:hover {
+    color: #ccc !important; /* Opcional: color al pasar el mouse */
+}
+
+.custom-navbar .dropdown-menu {
+    background-color: #34495e; /* Opcional: fondo del menú desplegable */    
+}
+/* Solo para el submenú de años */
+.custom-navbar .dropdown-menu .dropdown-menu {
+    max-height: 300px; /* Altura máxima antes de que aparezca scroll */
+    overflow-y: auto;  /* Scroll vertical */
+}
+
+.custom-navbar .dropdown-item {
+    color: white !important;
+}
+
+.custom-navbar .dropdown-item:hover {
+    background-color: #2c3e50; /* Igual al navbar */
+    color: #ccc !important;
+}
+
+.selection-title {
+        background-color: #f8f9fa;
+        padding: 15px;
+        margin: 20px auto;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.25rem;
+        max-width: 80%;
+    }
+
+    /* Estilos para el filtro en el navbar */
+    .filter-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .filter-label {
+        margin-bottom: 0;
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .filter-input {
+        width: 200px;
+    }
+#logoutBtn {
+    margin-top: -70px;
+    margin-right: 0; /* Pegado al borde */
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    padding: 5px 15px;
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+  
+
+.title-export-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 0 15px;
+    flex-wrap: wrap; /* Para responsive */
+    gap: 10px;
+}
+
+.pagination-text {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: auto; /* Empuja el título al centro */
+}
+ /* Scroll superior horizontal */
+        .table-scroll-container {
+            position: relative;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .table-scroll-top {
+            overflow-x: auto;
+            overflow-y: hidden;
+            height: 20px;
+            background: #f8f9fa;
+            margin-bottom: 5px;
+        }
+
+        .table-scroll-top::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .table-scroll-top::-webkit-scrollbar-thumb {
+            background: #6c757d;
+            border-radius: 4px;
+        }
+
+        /* Contenedor con scroll vertical y horizontal limitado */
+        .table-wrapper {
+        max-height: calc(100vh - 380px);
+        overflow-y: auto;
+        overflow-x: hidden;  /* ocultar scroll horizontal inferior */
+        border: 1px solid #dee2e6;
+        margin-right: -20px;
+    }
+
+        .table-wrapper table {
+            margin: 0;
+            border-collapse: collapse;
+            width: 100%;
+        }
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-left: 0.1rem;
+    display: none;
+    position: absolute;
+    min-width: 90px !important; /* ↓ Hace la columna más angosta */
+    width: auto;      /* Se ajusta al contenido */
+    padding: 0;
+    margin-top: -5px !important;    /* Margen superior invisible */
+    margin-bottom: -5px !important; /* Margen inferior invisible */
+    margin-left: -5px !important;  /* Margen izquierdo invisible */
+    padding-top: 10px !important;   /* Compensa el margin negativo */
+    padding-bottom: 10px !important; /* Compensa el margin negativo */
+}
+.dropdown-submenu .dropdown-menu .dropdown-item {
+    padding: 10px 20px !important;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+
+/* ESTILOS ORIGINALES (sin el azul claro) */
+.year-item {
+    color: #000000; /* Texto oscuro */
+    padding: 8px 15px;
+}
+
+
+
+.year-item.active {
+    background-color: #2c3e50 !important; /* Azul oscuro/gris original */
+    font-weight: bold;
+}
+
+
+/* Añade esto a tu CSS */
+.year-item {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Nueva paginación con input - Sin márgenes */
+    .pagination-new {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0; /* Eliminamos cualquier margen */
+        padding: 0; /* Eliminamos cualquier padding */
+        gap: 8px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        border-bottom: none;
+    }
+
+    .pagination-new .btn-pagination {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        color: #333;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        min-height: 36px;
+        margin: 20px; /* Aseguramos que no tenga márgenes */
+    }
+
+    .pagination-new .btn-pagination:hover:not(.disabled) {
+        background-color: #f5f5f5;
+        border-color: #d0d0d0;
+        text-decoration: none;
+    }
+
+    .pagination-new .btn-pagination.disabled {
+        color: #999;
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.6;
+        background-color: #f8f8f8;
+    }
+
+    .pagination-new .pagination-text {
+        color: #666;
+        font-size: 14px;
+        margin: 0 4px; /* Reducimos márgenes horizontales */
+    }
+
+    .pagination-new .page-input {
+        width: 80px;
+        padding: 6px 8px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+        background-color: white;
+        transition: border-color 0.2s ease;
+        margin: 0; /* Sin márgenes */
+    }
+
+    .pagination-new .page-input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    .pagination-new .page-go-btn {
+        background-color: #007bff;
+        border: 1px solid #007bff;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        margin: 0; /* Sin márgenes */
+    }
+
+    .pagination-new .page-go-btn:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    
+    /* Aseguramos que el contenedor principal tampoco tenga márgenes */
+    .pagination-container {
+        margin: 0;
+        padding: 0px;
+    }
+
+
+     /* Estilos para el logo de fondo */
+        .logo-fondo {
+            position: absolute;
+            top: 280px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 70%); /* Ajusté la altura para compensar */ 
+            background-image: url('../imagenes/logo.png'); /* Ruta a tu logo */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 35%; /* Ajusta el tamaño según necesites */
+             /* Hacemos el logo semi-transparente */
+             opacity: 0.7;
+            z-index: 1;
+            pointer-events: none; /* Permite hacer clic a través del logo */
+        }
+        
+        .results-container {
+            position: relative; /* Necesario para posicionar el logo de fondo */
+            min-height: 300px; /* Altura mínima para que el logo sea visible */
+        }
+        
+        .table-scroll-container {
+            position: relative;
+            z-index: 2; /* Aseguramos que la tabla esté por encima del logo */
+        }
+        
+        .loading, .error, .alert {
+            position: relative;
+            z-index: 2; /* Aseguramos que estos elementos estén por encima del logo */
+        }
+        
+
+        /* ==================== */
+/* CURSOR POINTER PARA TODO EL MENÚ */
+/* ==================== */
+
+/* ✅ 1. Items principales del navbar (Home, Docentes, Jurumí) */
+.navbar-nav .nav-link {
+    cursor: pointer !important;
+}
+
+/* ✅ 2. Dropdown toggles (los que tienen flechita) */
+.navbar-nav .dropdown-toggle {
+    cursor: pointer !important;
+}
+
+/* ✅ 3. Todos los items normales de dropdown */
+.dropdown-menu .dropdown-item {
+    cursor: pointer !important;
+}
+
+/* ✅ 4. Items específicos de años */
+.dropdown-menu .year-item {
+    cursor: pointer !important;
+}
+
+/* ✅ 5. Items específicos de Jurumí */
+.dropdown-menu .jurumi-item {
+    cursor: pointer !important;
+}
+
+/* ✅ 6. Items de submenú (los que tienen otro dropdown) */
+.dropdown-submenu .dropdown-toggle {
+    cursor: pointer !important;
+}
+
+/* ✅ 7. Items dentro de submenús anidados */
+.dropdown-submenu .dropdown-menu .dropdown-item {
+    cursor: pointer !important;
+}
+
+/* ✅ 8. Botón de refresh */
+#refreshBtn {
+    cursor: pointer !important;
+}
+
+/* ✅ 9. Botón de filtro */
+#filterBtn {
+    cursor: pointer !important;
+}
+
+/* ==================== */
+/* EXTRAS: Hover effects bonitos */
+/* ==================== */
+
+/* ✅ Hover para items principales */
+.navbar-nav .nav-link:hover {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    border-radius: 5px;
+}
+
+/* ✅ Hover para items de dropdown */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .year-item:hover,
+.dropdown-menu .jurumi-item:hover {
+    background-color: #2c3e50 !important;
+    color: white !important;
+}
+
+/* ✅ Hover para botones */
+#refreshBtn:hover,
+#filterBtn:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* ✅ Hover para dropdown toggles */
+.navbar-nav .dropdown-toggle:hover {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    border-radius: 5px 5px 0 0;
+}
+
+.producto-container {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
+        margin: 15px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .producto-container label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+    
+    .producto-container .form-select {
+        border-radius: 8px;
+        border: 2px solid #3498db;
+        padding: 10px 15px;
+        font-size: 14px;
+        max-height: 200px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .producto-container .form-select option {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 500px;
+        display: block;
+    }
+    
+    .producto-container .form-select:focus {
+        border-color: #2980b9;
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+
+
+
+    .floating-registro {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.floating-btn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 20px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.floating-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    color: white;
+}
+
+.floating-text {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .floating-text {
+        display: inline;
+    }
+}

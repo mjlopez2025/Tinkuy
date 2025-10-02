@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="login.css">
+  <title>Registro | Tinkuy</title>
+</head>
+<body>
+  <div class="container1">
+    <div class="logo-container">
+      <div class="image-side">
+        <img src="../imagenes/logo.png" alt="Logo UNDAV" class="logo-undav">
+      </div>
+      <div class="tincuy">
+        <p style="font-size: 10pt; font-weight: normal;">Tinkuy: Del quechua, "Encuentro" o "Unión armónica". <br>
+          En la tradición andina, representa la convergencia de fuerzas complementarias para crear algo superior.</p>
+      </div>
+    </div>
+    <div class="login-container">
+      <h1>Crear Cuenta</h1>
+      <form id="registerForm">
+        <div class="input-group">
+          <label for="email">Correo Electrónico</label>
+          <div class="input-with-icon">
+            <input type="email" id="email" name="email" value="" placeholder="tucorreo@undav.edu.ar" required autocomplete="off">
+            <i class="fas fa-envelope icon"></i>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label for="new-username">Usuario</label>
+          <div class="input-with-icon">
+            <input type="text" id="new-username" name="new-username" value="" placeholder="Crea tu nombre de usuario" required minlength="3" maxlength="50" autocomplete="off">
+            <i class="fas fa-user icon"></i>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label for="new-password">Contraseña</label>
+          <div class="input-with-icon">
+            <input type="password" id="new-password" name="new-password" value="" placeholder="Mínimo 8 caracteres" required minlength="8" autocomplete="off">
+            <i class="fas fa-lock icon"></i>
+            <span class="toggle-password" onclick="togglePassword('new-password')">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
+          <div class="password-strength-meter">
+            <div class="strength-bar"></div>
+            <span class="strength-text">Seguridad: <span id="strength-text">Débil</span></span>
+          </div>
+        </div>
+        
+        <div class="input-group">
+          <label for="confirm-password">Repetir Contraseña</label>
+          <div class="input-with-icon">
+            <input type="password" id="confirm-password" name="confirm-password" value="" placeholder="Vuelve a escribir tu contraseña" required autocomplete="off">
+            <i class="fas fa-lock icon"></i>
+            <span class="toggle-password" onclick="togglePassword('confirm-password')">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div> 
+          <span id="password-match-message" class="message"></span>
+        </div>
+        
+        <button type="submit" class="btn-login" id="submitBtn">
+          <span class="btn-text">Registrar</span>
+        </button>
+        <div class="register-link">
+          <p><a href="../consultas/principal.php" class="register-anchor">Volver</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <p class="footer-text">TINKUY v.1.0 &copy; 2025 - Desarrollado por el Área de Sistemas de la Universidad Nacional de Avellaneda.</p>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const passwordInput = document.getElementById('new-password');
+      const confirmPasswordInput = document.getElementById('confirm-password');
+      const strengthText = document.getElementById('strength-text');
+      const strengthBar = document.querySelector('.strength-bar');
+      const passwordMatchMessage = document.getElementById('password-match-message');
+      const registerForm = document.getElementById('registerForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = submitBtn.querySelector('.btn-text');
+
+      // Mostrar/ocultar contraseña
+      window.togglePassword = function(fieldId) {
+        const field = document.getElementById(fieldId);
+        const icon = field.nextElementSibling.querySelector('i');
+        if (field.type === 'password') {
+          field.type = 'text';
+          icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+          field.type = 'password';
+          icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+      };
+
+      // Medidor de fortaleza
+      passwordInput.addEventListener('input', function() {
+        const password = this.value;
+        let strength = 0;
+        
+        // Longitud
+        if (password.length >= 8) strength++;
+        if (password.length >= 12) strength++;
+        
+        // Complejidad
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[^A-Za-z0-9]/.test(password)) strength++;
+        
+        // Actualizar UI
+        strengthBar.parentElement.classList.remove('password-weak', 'password-medium', 'password-strong');
+        
+        if (strength <= 2) {
+          strengthBar.parentElement.classList.add('password-weak');
+          strengthText.textContent = 'Débil';
+        } else if (strength <= 4) {
+          strengthBar.parentElement.classList.add('password-medium');
+          strengthText.textContent = 'Media';
+        } else {
+          strengthBar.parentElement.classList.add('password-strong');
+          strengthText.textContent = 'Fuerte';
+        }
+      });
+
+      // Validar coincidencia de contraseñas
+      confirmPasswordInput.addEventListener('input', function() {
+        if (this.value !== passwordInput.value) {
+          passwordMatchMessage.textContent = 'Las contraseñas no coinciden';
+          passwordMatchMessage.style.color = '#e74c3c';
+        } else {
+          passwordMatchMessage.textContent = 'Las contraseñas coinciden';
+          passwordMatchMessage.style.color = '#2ecc71';
+        }
+      });
+
+      // Validación del formulario
+      registerForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Resetear mensajes de error
+        clearErrors();
+
+        // Validación básica del cliente
+        const errors = [];
+        
+        if (passwordInput.value !== confirmPasswordInput.value) {
+          errors.push('Las contraseñas no coinciden');
+        }
+
+        if (passwordInput.value.length < 8) {
+          errors.push('La contraseña debe tener al menos 8 caracteres');
+        }
+
+        if (!document.getElementById('email').value.includes('@')) {
+          errors.push('Ingrese un correo electrónico válido');
+        }
+
+        if (document.getElementById('new-username').value.length < 3) {
+          errors.push('El usuario debe tener al menos 3 caracteres');
+        }
+
+        if (errors.length > 0) {
+          showError(errors.join('<br>'));
+          return;
+        }
+
+        // Mostrar estado de carga
+        setLoadingState(true);
+
+        try {
+          // Crear objeto con los datos del formulario
+          const formData = {
+            email: document.getElementById('email').value.trim(),
+            'new-username': document.getElementById('new-username').value.trim(),
+            'new-password': passwordInput.value,
+            'confirm-password': confirmPasswordInput.value
+          };
+
+          // Enviar datos al servidor
+          const response = await fetch('registro_procesar.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+          });
+
+          // Procesar respuesta
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.errors || 'Error en el servidor');
+          }
+
+          if (data.success) {
+            // Redirigir a página de éxito
+            window.location.href = 'index.html';
+          } else {
+            // Mostrar errores del servidor
+            showError(data.errors.join('<br>'));
+          }
+        } catch (error) {
+          console.error('Error en el registro:', error);
+          showError(error.message || 'Error al conectar con el servidor. Por favor, intente nuevamente.');
+        } finally {
+          // Restaurar botón
+          setLoadingState(false);
+        }
+      });
+
+      // Función para mostrar errores
+      function showError(message) {
+        let errorContainer = document.getElementById('error-container');
+        
+        if (!errorContainer) {
+          errorContainer = document.createElement('div');
+          errorContainer.id = 'error-container';
+          errorContainer.className = 'error-container';
+          registerForm.prepend(errorContainer);
+        }
+        
+        errorContainer.innerHTML = `
+          <div class="error-content">
+            <i class="fas fa-exclamation-circle"></i>
+            <div>${message}</div>
+          </div>
+        `;
+        
+        // Desplazarse al error
+        errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Función para limpiar errores anteriores
+      function clearErrors() {
+        const errorContainer = document.getElementById('error-container');
+        if (errorContainer) {
+          errorContainer.remove();
+        }
+      }
+
+      // Función para manejar estado de carga
+      function setLoadingState(isLoading) {
+        if (isLoading) {
+          submitBtn.disabled = true;
+          btnText.innerHTML = '<i class="fas fa-spinner spinner"></i> Registrando...';
+        } else {
+          submitBtn.disabled = false;
+          btnText.textContent = 'Registrarse';
+        }
+      }
+    });
+    window.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  if (form) form.reset();
+});
+  </script>
+</body>
+</html>
